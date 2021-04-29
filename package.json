@@ -1,0 +1,22 @@
+{
+  "name": "submission",
+  "version": "1.0.0",
+  "description": "submission untuk kelas dicoding backend pemula",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-dev": "nodemon server.js"
+  },
+  "keywords": [
+    "dicoding",
+    "backend-pemula",
+    "submission"
+  ],
+  "author": "Gregorius Ivan Sebastian",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/hapi": "^20.1.2",
+    "eslint": "^7.25.0",
+    "nodemon": "^2.0.7"
+  }
+}
