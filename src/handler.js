@@ -43,17 +43,25 @@ const getBook = (request, h) => {
 
   const { name, reading, finished } = request.query;
   const allBooks = [...storage.values()];
+  let booksByQuery = allBooks;
 
   if (name !== undefined) {
-    const allBooksByName = allBooks.filter((entry) => entry.name.toLowerCase().includes(name));
+    booksByQuery = allBooks
+      .filter((entry) => entry.name.toLowerCase().includes(name.toLowerCase()));
   }
 
-  const allBooksResponse = {
-    books: allBooks
-      .map((bookEntry) => bookEntry.getIdNameAndPublisher()),
-  };
+  if (reading !== undefined) {
+    booksByQuery = allBooks
+      .filter((entry) => entry.reading === (reading === '1'));
+  }
 
-  return h.response(successResponse({ responseData: allBooksResponse }))
+  if (finished !== undefined) {
+    booksByQuery = allBooks
+      .filter((entry) => entry.finished === (finished === '1'));
+  }
+
+  const finalBooksResult = booksByQuery.map((bookEntry) => bookEntry.getIdNameAndPublisher());
+  return h.response(successResponse({ responseData: { books: finalBooksResult } }))
     .code(200);
 };
 
