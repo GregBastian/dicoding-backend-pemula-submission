@@ -18,8 +18,15 @@ class Book {
     this.updatedAt = currentTime;
   }
 
-  static updateBook(entry) {
-    return new Book(entry, { updatedAt: 1 });
+  updateBook(newData) {
+    this.name = newData.name;
+    this.year = newData.year;
+    this.author = newData.author;
+    this.summary = newData.summary;
+    this.publisher = newData.publisher;
+    this.pageCount = newData.pageCount;
+    this.readPage = newData.readPage;
+    this.reading = newData.reading;
   }
 
   getIdNameAndPublisher() {

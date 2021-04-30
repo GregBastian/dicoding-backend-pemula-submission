@@ -19,7 +19,7 @@ const addBook = (request, h) => {
 
     const newBook = new Book(payload);
     storage.set(newBook.id, newBook);
-    return h.response(successResponse({ responseMessage: 'Buku berhasil ditambahkan', responseData: { bookId: payload.id } }))
+    return h.response(successResponse({ responseMessage: 'Buku berhasil ditambahkan', responseData: { bookId: newBook.id } }))
       .code(201);
   } catch (error) {
     const message = 'Gagal menambahkan buku. readPage tidak boleh lebih besar dari pageCount';
@@ -30,8 +30,8 @@ const addBook = (request, h) => {
 
 const getBook = (request, h) => {
   const { bookIdParam } = request.params;
+  const bookById = storage.get(bookIdParam);
   if (bookIdParam !== undefined) {
-    const bookById = storage.get(bookIdParam);
     if (bookById === undefined) {
       const message = 'Buku tidak ditemukan';
       return h.response(failResponse({ responseMessage: message }))
@@ -41,9 +41,22 @@ const getBook = (request, h) => {
       .code(200);
   }
 
-  const allBooks = { books: [...storage.values()].map((entry) => entry.getIdNameAndPublisher()) };
+  const allBooks = {
+    books: [...storage.values()]
+      .map((bookEntry) => bookEntry.getIdNameAndPublisher()),
+  };
   return h.response(successResponse({ responseData: allBooks }))
     .code(200);
 };
 
-module.exports = { addBook, getBook };
+const changeBook = (request, h) => {
+  const { payload } = request;
+  const { bookIdParam } = request.params;
+
+  const searchedBook = storage.get(bookIdParam);
+  searchedBook.updateBook(payload);
+  return h.response(successResponse({ responseMessage: 'Buku berhasil diperbarui' }))
+    .code(200);
+};
+
+module.exports = { addBook, getBook, changeBook };
