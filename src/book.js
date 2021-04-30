@@ -10,7 +10,7 @@ class Book {
     this.publisher = entry.publisher;
     this.pageCount = entry.pageCount;
     this.readPage = entry.readPage;
-    this.finished = false;
+    this.finished = entry.readPage === entry.pageCount;
     this.reading = entry.reading;
 
     const currentTime = new Date().toISOString();
@@ -27,6 +27,7 @@ class Book {
     this.pageCount = newData.pageCount;
     this.readPage = newData.readPage;
     this.reading = newData.reading;
+    this.updatedAt = new Date().toISOString();
   }
 
   getIdNameAndPublisher() {
