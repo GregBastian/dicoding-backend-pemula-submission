@@ -8,12 +8,12 @@ const routes = [
   },
   {
     method: 'GET',
-    path: '/books/{bookIdParam?}',
+    path: '/books/{bookIdParam}',
     handler: getBook,
   },
   {
     method: 'PUT',
-    path: '/books/{bookIdParam?}',
+    path: '/books/{bookIdParam}',
     handler: changeBook,
   },
 ];

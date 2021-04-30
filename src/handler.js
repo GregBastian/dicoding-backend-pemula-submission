@@ -52,8 +52,26 @@ const getBook = (request, h) => {
 const changeBook = (request, h) => {
   const { payload } = request;
   const { bookIdParam } = request.params;
-
   const searchedBook = storage.get(bookIdParam);
+
+  if (payload.name === undefined) {
+    const message = 'Gagal memperbarui buku. Mohon isi nama buku';
+    return h.response(failResponse({ responseMessage: message, withData: false }))
+      .code(400);
+  }
+
+  if (payload.readPage > payload.pageCount) {
+    const message = 'Gagal memperbarui buku. readPage tidak boleh lebih besar dari pageCount';
+    return h.response(failResponse({ responseMessage: message, withData: false }))
+      .code(400);
+  }
+
+  if (searchedBook === undefined) {
+    const message = 'Gagal memperbarui buku. Id tidak ditemukan';
+    return h.response(failResponse({ responseMessage: message, withData: false }))
+      .code(404);
+  }
+
   searchedBook.updateBook(payload);
   return h.response(successResponse({ responseMessage: 'Buku berhasil diperbarui' }))
     .code(200);
