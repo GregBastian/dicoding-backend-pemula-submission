@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-dev": "nodemon server.js"
+    "start": "nodemon ./src/server.js",
+    "lint": "eslint ./ --fix"
   },
   "keywords": [
     "dicoding",
@@ -16,7 +17,12 @@
   "license": "ISC",
   "dependencies": {
     "@hapi/hapi": "^20.1.2",
-    "eslint": "^7.25.0",
+    "nanoid": "^3.1.22",
     "nodemon": "^2.0.7"
+  },
+  "devDependencies": {
+    "eslint": "^7.25.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1"
   }
 }
