@@ -2,7 +2,7 @@ const Book = require('./book');
 const { successResponse, failResponse, errorResponse } = require('./response-template');
 const storage = require('./storage');
 
-const postBook = (request, h) => {
+const postBookHandler = (request, h) => {
   try {
     const { payload } = request;
     if (payload.name === undefined) {
@@ -22,13 +22,15 @@ const postBook = (request, h) => {
     return h.response(successResponse({ responseMessage: 'Buku berhasil ditambahkan', responseData: { bookId: newBook.id } }))
       .code(201);
   } catch (error) {
-    const message = 'Gagal menambahkan buku. readPage tidak boleh lebih besar dari pageCount';
+    const message = 'Buku gagal ditambahkan';
     return h.response(errorResponse(message))
       .code(500);
   }
 };
 
-const getBook = (request, h) => {
+// ============================================================================
+
+const getBookHandler = (request, h) => {
   const { bookIdParam } = request.params;
   const bookById = storage.get(bookIdParam);
   if (bookIdParam !== undefined) {
@@ -65,7 +67,9 @@ const getBook = (request, h) => {
     .code(200);
 };
 
-const putBook = (request, h) => {
+// ============================================================================
+
+const putBookHandler = (request, h) => {
   const { payload } = request;
   const { bookIdParam } = request.params;
   const searchedBook = storage.get(bookIdParam);
@@ -93,7 +97,9 @@ const putBook = (request, h) => {
     .code(200);
 };
 
-const deleteBook = (request, h) => {
+// ============================================================================
+
+const deleteBookHandler = (request, h) => {
   const { bookIdParam } = request.params;
   const searchedBook = storage.get(bookIdParam);
   if (searchedBook === undefined) {
@@ -108,5 +114,5 @@ const deleteBook = (request, h) => {
 };
 
 module.exports = {
-  postBook, getBook, putBook, deleteBook,
+  postBookHandler, getBookHandler, putBookHandler, deleteBookHandler,
 };
