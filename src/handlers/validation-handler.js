@@ -1,16 +1,15 @@
 const { failResponse } = require('../response-template');
-const { nameRequiredSchemaMessage, readPageValueInvalidSchemaMessage } = require('../constants');
 
 const nameAndReadPageValidationHandler = (request, h, source) => {
   const { message: schemaMessage } = source.details[0];
   let message = 'Bad Request';
   const verb = request.method === 'post' ? 'menambahkan' : 'memperbarui';
 
-  if (schemaMessage === nameRequiredSchemaMessage) {
+  if (schemaMessage === 'BOOK_NAME_REQUIRED') {
     message = `Gagal ${verb} buku. Mohon isi nama buku`;
   }
 
-  if (schemaMessage === readPageValueInvalidSchemaMessage) {
+  if (schemaMessage === 'READ_PAGE_VALUE_INVALID') {
     message = `Gagal ${verb} buku. readPage tidak boleh lebih besar dari pageCount`;
   }
 
