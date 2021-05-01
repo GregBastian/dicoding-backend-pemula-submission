@@ -1,12 +1,25 @@
+const Joi = require('joi');
 const {
   postBookHandler, getBookHandler, putBookHandler, deleteBookHandler,
-} = require('./handler');
+} = require('./handlers/handler');
+
+const {
+  postBookValidationHandler,
+} = require('./handlers/validation-handler');
+
+const { nameAndReadPageSchema } = require('./schemas');
 
 const routes = [
   {
     method: 'POST',
     path: '/books',
     handler: postBookHandler,
+    config: {
+      validate: {
+        payload: nameAndReadPageSchema,
+        failAction: postBookValidationHandler,
+      },
+    },
   },
   {
     method: 'GET',
