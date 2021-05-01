@@ -1,10 +1,9 @@
-const Joi = require('joi');
 const {
   postBookHandler, getBookHandler, putBookHandler, deleteBookHandler,
 } = require('./handlers/handler');
 
 const {
-  postBookValidationHandler,
+  nameAndReadPageValidationHandler,
 } = require('./handlers/validation-handler');
 
 const { nameAndReadPageSchema } = require('./schemas');
@@ -17,7 +16,7 @@ const routes = [
     config: {
       validate: {
         payload: nameAndReadPageSchema,
-        failAction: postBookValidationHandler,
+        failAction: nameAndReadPageValidationHandler,
       },
     },
   },
@@ -30,6 +29,12 @@ const routes = [
     method: 'PUT',
     path: '/books/{bookIdParam}',
     handler: putBookHandler,
+    config: {
+      validate: {
+        payload: nameAndReadPageSchema,
+        failAction: nameAndReadPageValidationHandler,
+      },
+    },
   },
   {
     method: 'DELETE',
